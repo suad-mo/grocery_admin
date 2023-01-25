@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_admin/widgets/products_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../consts/constants.dart';
@@ -31,6 +32,7 @@ class DashboardScreen extends StatelessWidget {
                       // MyProductsHome(),
                       // SizedBox(height: defaultPadding),
                       // OrdersScreen(),
+                      ProductWidget(),
                     ],
                   ),
                 ),
