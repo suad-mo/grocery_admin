@@ -50,16 +50,16 @@ class _ProductWidgetState extends State<ProductWidget> {
                         itemBuilder: (context) => [
                               PopupMenuItem(
                                 onTap: () {},
-                                child: Text('Edit'),
                                 value: 1,
+                                child: const Text('Edit'),
                               ),
                               PopupMenuItem(
                                 onTap: () {},
-                                child: Text(
+                                value: 2,
+                                child: const Text(
                                   'Delete',
                                   style: TextStyle(color: Colors.red),
                                 ),
-                                value: 2,
                               ),
                             ])
                   ],
