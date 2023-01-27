@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_admin/inner_screens/all_products.dart';
+import 'package:grocery_admin/widgets/orders_list.dart';
 import 'package:grocery_admin/widgets/text_widget.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
+import '../inner_screens/all_orders_screen.dart';
 import '../providers/dark_theme_provider.dart';
 import '../screens/main_screen.dart';
 import '../services/utils.dart';
@@ -50,14 +52,22 @@ class _SideMenuState extends State<SideMenu> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const AllProductsScreen()),
+                  builder: (context) => const AllProductsScreen(),
+                ),
               );
             },
             icon: Icons.store,
           ),
           DrawerListTile(
             title: "View all order",
-            press: () {},
+            press: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AllOrdersScreen(),
+                ),
+              );
+            },
             icon: IconlyBold.bag_2,
           ),
           SwitchListTile(

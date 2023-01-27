@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_admin/responsive.dart';
 import 'package:grocery_admin/widgets/grid_products.dart';
+import 'package:grocery_admin/widgets/orders_list.dart';
 import 'package:grocery_admin/widgets/products_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,7 @@ class DashboardScreen extends StatelessWidget {
     Size size = Utils(context).getScreenSize;
     return SafeArea(
       child: SingleChildScrollView(
+        controller: ScrollController(),
         padding: const EdgeInsets.all(defaultPadding),
         child: Column(
           children: [
@@ -43,6 +45,7 @@ class DashboardScreen extends StatelessWidget {
                           childAspectRatio: size.width < 1400 ? 0.8 : 1.05,
                         ),
                       ),
+                      const OrdersList(),
                       // MyProductsHome(),
                       // SizedBox(height: defaultPadding),
                       // OrdersScreen(),
