@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../controllers/MenuController.dart';
 import '../responsive.dart';
 import '../services/utils.dart';
-import '../widgets/grid_products.dart';
 import '../widgets/header.dart';
 import '../widgets/orders_list.dart';
 import '../widgets/side_menu.dart';

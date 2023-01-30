@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_admin/responsive.dart';
+import 'package:grocery_admin/widgets/buttons.dart';
 import 'package:grocery_admin/widgets/grid_products.dart';
 import 'package:grocery_admin/widgets/orders_list.dart';
-import 'package:grocery_admin/widgets/products_widget.dart';
+import 'package:grocery_admin/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../consts/constants.dart';
@@ -16,6 +17,7 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = Utils(context).getScreenSize;
+    Color color = Utils(context).color;
     return SafeArea(
       child: SingleChildScrollView(
         controller: ScrollController(),
@@ -27,7 +29,30 @@ class DashboardScreen extends StatelessWidget {
                 context.read<MenuController>().controlDashboarkMenu();
               },
             ),
-            const SizedBox(height: defaultPadding),
+            const SizedBox(height: 15),
+            TextWidget(text: 'Leatest Product', color: color),
+            const SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  ButtonsWidget(
+                    onPressed: () {},
+                    text: 'View All',
+                    icon: Icons.store,
+                    backgroundColor: Colors.blue,
+                  ),
+                  const Spacer(),
+                  ButtonsWidget(
+                    onPressed: () {},
+                    text: 'Add product',
+                    icon: Icons.add,
+                    backgroundColor: Colors.blue,
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(height: 15),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

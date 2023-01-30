@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_admin/inner_screens/all_products.dart';
-import 'package:grocery_admin/widgets/orders_list.dart';
 import 'package:grocery_admin/widgets/text_widget.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
