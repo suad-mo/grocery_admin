@@ -48,9 +48,11 @@ class DashboardScreen extends StatelessWidget {
                   const Spacer(),
                   ButtonsWidget(
                     onPressed: () {
-                      GlobalMethods.navigateTo(
-                        ctx: context,
-                        routeName: UploadProductForm.routeName,
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const UploadProductForm(),
+                        ),
                       );
                     },
                     text: 'Add product',
