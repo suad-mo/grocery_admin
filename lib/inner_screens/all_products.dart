@@ -39,10 +39,17 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
+                    const SizedBox(
+                      height: 25,
+                    ),
                     Header(
                       fct: () {
                         context.read<MenuController>().controlProductsMenu();
                       },
+                      title: 'All products',
+                    ),
+                    const SizedBox(
+                      height: 25,
                     ),
                     Responsive(
                       mobile: ProductGridWidget(

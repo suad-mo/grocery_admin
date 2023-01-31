@@ -66,6 +66,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
       key: context.read<MenuController>().getAddProductscaffoldKey,
       drawer: const SideMenu(),
       body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (Responsive.isDesktop(context))
             const Expanded(
@@ -76,9 +77,22 @@ class _UploadProductFormState extends State<UploadProductForm> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Header(fct: () {
-                    context.read<MenuController>().controlAddProductsMenu();
-                  }),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Header(
+                      fct: () {
+                        context.read<MenuController>().controlAddProductsMenu();
+                      },
+                      title: 'Add Product',
+                      showTextField: false,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
                   Container(
                     width: size.width > 650 ? 650 : size.width,
                     color: Theme.of(context).cardColor,

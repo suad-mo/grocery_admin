@@ -40,10 +40,14 @@ class _AllOrdersScreenState extends State<AllOrdersScreen> {
                   controller: ScrollController(),
                   child: Column(
                     children: [
+                      const SizedBox(
+                        height: 25,
+                      ),
                       Header(
                         fct: () {
                           context.read<MenuController>().controlAllOrder();
                         },
+                        title: 'All Orders',
                       ),
                       const SizedBox(
                         height: 20,
