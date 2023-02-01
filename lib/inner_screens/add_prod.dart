@@ -249,11 +249,15 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                     ),
                                     child: _pickedImage == null
                                         ? dottedBorder(color: color)
-                                        : kIsWeb
-                                            ? Image.memory(webImage,
-                                                fit: BoxFit.fill)
-                                            : Image.file(_pickedImage!,
-                                                fit: BoxFit.fill),
+                                        : ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            child: kIsWeb
+                                                ? Image.memory(webImage,
+                                                    fit: BoxFit.fill)
+                                                : Image.file(_pickedImage!,
+                                                    fit: BoxFit.fill),
+                                          ),
                                   ),
                                 ),
                               ),
@@ -263,7 +267,12 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                     child: Column(
                                       children: [
                                         TextButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            setState(() {
+                                              _pickedImage = null;
+                                              webImage = Uint8List(8);
+                                            });
+                                          },
                                           child: TextWidget(
                                             text: 'Clear',
                                             color: Colors.red,
