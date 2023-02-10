@@ -28,7 +28,7 @@ class DashboardScreen extends StatelessWidget {
           children: [
             Header(
               fct: () {
-                context.read<MenuController>().controlDashboarkMenu();
+                context.read<MenuControllerA>().controlDashboarkMenu();
               },
               title: 'Dashboard',
             ),
