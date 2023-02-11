@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -60,24 +61,78 @@ class _UploadProductFormState extends State<UploadProductForm> {
   void _uploadForm() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
-    setState(() {
-      _isLoading = true;
-    });
+
     if (isValid) {
       _formKey.currentState!.save();
+      if (_pickedImage == null) {
+        GlobalMethods.errorDialog(
+          subtitle: 'Please pick up an image',
+          context: context,
+        );
+        return;
+      }
       final _uuid = const Uuid().v4();
       try {
-        await FirebaseFirestore.instance.collection('products').doc(_uuid).set({
-          'id': _uuid,
-          'title': _titleController.text,
-          'price': _priceController.text,
-          'salePrice': 0.1,
-          'imageUrl': '',
-          'prosuctCategoryName': _catValue,
-          'isOnSale': false,
-          'isPiece': isPiece,
-          'createdAt': Timestamp.now(),
+        setState(() {
+          _isLoading = true;
         });
+
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('productsImages')
+            .child('$_uuid.jpg');
+
+        if (kIsWeb) /* if web */ {
+          // putData() accepts Uint8List type argument
+          await ref.putData(webImage).whenComplete(() async {
+            final imageUri = await ref.getDownloadURL();
+            await FirebaseFirestore.instance
+                .collection('products')
+                .doc(_uuid)
+                .set({
+              'id': _uuid,
+              'title': _titleController.text,
+              'price': _priceController.text,
+              'salePrice': 0.1,
+              'imageUrl': imageUri.toString(),
+              'productCategoryName': _catValue,
+              'isOnSale': false,
+              'isPiece': isPiece,
+              'createdAt': Timestamp.now(),
+            });
+          });
+        } else /* if mobile */ {
+          // putFile() accepts File type argument
+          await ref.putFile(_pickedImage!).whenComplete(() async {
+            final imageUri = await ref.getDownloadURL();
+            await FirebaseFirestore.instance
+                .collection('products')
+                .doc(_uuid)
+                .set({
+              'id': _uuid,
+              'title': _titleController.text,
+              'price': _priceController.text,
+              'salePrice': 0.1,
+              'imageUrl': imageUri.toString(),
+              'productCategoryName': _catValue,
+              'isOnSale': false,
+              'isPiece': isPiece,
+              'createdAt': Timestamp.now(),
+            });
+          });
+        }
+
+        // await FirebaseFirestore.instance.collection('products').doc(_uuid).set({
+        //   'id': _uuid,
+        //   'title': _titleController.text,
+        //   'price': _priceController.text,
+        //   'salePrice': 0.1,
+        //   'imageUrl': '',
+        //   'prosuctCategoryName': _catValue,
+        //   'isOnSale': false,
+        //   'isPiece': isPiece,
+        //   'createdAt': Timestamp.now(),
+        // });
         _clearForm();
         Fluttertoast.showToast(
           msg: "Product uploaded succefully",
