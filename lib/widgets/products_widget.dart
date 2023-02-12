@@ -28,11 +28,11 @@ class _ProductWidgetState extends State<ProductWidget> {
 
   @override
   void initState() {
-    getUserData();
+    getProductData();
     super.initState();
   }
 
-  Future<void> getUserData() async {
+  Future<void> getProductData() async {
     setState(() {
       _isLoading = true;
     });
@@ -45,13 +45,15 @@ class _ProductWidgetState extends State<ProductWidget> {
       if (productsDoc == null) {
         return;
       } else {
-        title = productsDoc.get('title');
-        productCat = productsDoc.get('productCategoryName');
-        imageUrl = productsDoc.get('imageUrl');
-        price = productsDoc.get('price');
-        salePrice = productsDoc.get('salePrice');
-        isOnSale = productsDoc.get('isOnSale');
-        isPiece = productsDoc.get('isPiece');
+        setState(() {
+          title = productsDoc.get('title');
+          productCat = productsDoc.get('productCategoryName');
+          imageUrl = productsDoc.get('imageUrl');
+          price = productsDoc.get('price');
+          salePrice = productsDoc.get('salePrice');
+          isOnSale = productsDoc.get('isOnSale');
+          isPiece = productsDoc.get('isPiece');
+        });
       }
     } catch (error) {
       setState(() {

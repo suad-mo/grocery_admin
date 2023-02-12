@@ -71,13 +71,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
     val = _isPiece ? 2 : 1;
     _imageUrl = widget.imageUrl;
     // Calculate the percentage
-    percToShow = (100 -
-                (_salePrice * 100) /
-                    double.parse(
-                        widget.price)) // WIll be the price instead of 1.88
-            .round()
-            .toStringAsFixed(1) +
-        '%';
+    percToShow =
+        '${(100 - (_salePrice * 100) / double.parse(widget.price)) // WIll be the price instead of 1.88
+            .round().toStringAsFixed(1)}%';
     super.initState();
   }
 
