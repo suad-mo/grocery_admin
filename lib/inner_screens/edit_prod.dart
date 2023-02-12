@@ -2,9 +2,12 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconly/iconly.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -83,6 +86,108 @@ class _EditProductScreenState extends State<EditProductScreen> {
     _priceController.dispose();
     _titleController.dispose();
     super.dispose();
+  }
+
+// bool _isLoading = false;
+
+  void _updateProduct() async {
+    final isValid = _formKey.currentState!.validate();
+    FocusScope.of(context).unfocus();
+
+    if (isValid) {
+      _formKey.currentState!.save();
+
+      try {
+        String? imageUrl;
+        setState(() {
+          _isLoading = true;
+        });
+        if (_pickedImage != null) {
+          final ref = FirebaseStorage.instance
+              .ref()
+              .child('productsImages')
+              .child('${widget.id}.jpg');
+          imageUrl = await ref.getDownloadURL();
+        }
+
+        await FirebaseFirestore.instance
+            .collection('products')
+            .doc(widget.id)
+            .update({
+          'id': widget.id,
+          'title': _titleController.text,
+          'price': _priceController.text,
+          'salePrice': _salePrice,
+          'imageUrl': _pickedImage == null ? widget.imageUrl : imageUrl,
+          'productCategoryName': _catValue,
+          'isOnSale': _isOnSale,
+          'isPiece': _isPiece,
+        });
+        // });
+        // } else /* if mobile */ {
+        //   // putFile() accepts File type argument
+        //   await ref.putFile(_pickedImage!).whenComplete(() async {
+        //     final imageUri = await ref.getDownloadURL();
+        //     await FirebaseFirestore.instance
+        //         .collection('products')
+        //         .doc(_uuid)
+        //         .set({
+        //       'id': _uuid,
+        //       'title': _titleController.text,
+        //       'price': _priceController.text,
+        //       'salePrice': 0.1,
+        //       'imageUrl': imageUri.toString(),
+        //       'productCategoryName': _catValue,
+        //       'isOnSale': false,
+        //       'isPiece': isPiece,
+        //       'createdAt': Timestamp.now(),
+        //     });
+        // });
+        // }
+
+        // await FirebaseFirestore.instance.collection('products').doc(_uuid).set({
+        //   'id': _uuid,
+        //   'title': _titleController.text,
+        //   'price': _priceController.text,
+        //   'salePrice': 0.1,
+        //   'imageUrl': '',
+        //   'prosuctCategoryName': _catValue,
+        //   'isOnSale': false,
+        //   'isPiece': isPiece,
+        //   'createdAt': Timestamp.now(),
+        // });
+        // _clearForm();
+        Fluttertoast.showToast(
+          msg: "Product uploaded succefully",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          // backgroundColor: ,
+          // textColor: ,
+          // fontSize: 16.0
+        );
+      } on FirebaseException catch (error) {
+        GlobalMethods.errorDialog(
+          subtitle: '${error.message}',
+          context: context,
+        );
+        setState(() {
+          _isLoading = false;
+        });
+      } catch (error) {
+        GlobalMethods.errorDialog(
+          subtitle: '$error',
+          context: context,
+        );
+        setState(() {
+          _isLoading = false;
+        });
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   @override
@@ -191,7 +296,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                               if (value!.isEmpty) {
                                                 return 'Price is missed';
                                               }
+
                                               return null;
+                                            },
+                                            onChanged: (value) {
+                                              // setState(() {
+                                              //   _salePrice =
+                                              //       double.parse(value) *
+                                              //           (1 -
+                                              //               double.parse(
+                                              //                   _salePercent!));
+                                              // });
                                             },
                                             inputFormatters: <
                                                 TextInputFormatter>[
@@ -382,6 +497,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                   ),
                                   ButtonsWidget(
                                     onPressed: () {
+                                      _updateProduct();
                                       // _uploadForm();
                                     },
                                     text: 'Update',
