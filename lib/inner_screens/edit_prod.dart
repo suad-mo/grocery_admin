@@ -114,7 +114,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
             .collection('products')
             .doc(widget.id)
             .update({
-          'id': widget.id,
+          // 'id': widget.id,
           'title': _titleController.text,
           'price': _priceController.text,
           'salePrice': _salePrice,
@@ -157,14 +157,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
         //   'createdAt': Timestamp.now(),
         // });
         // _clearForm();
-        Fluttertoast.showToast(
-          msg: "Product uploaded succefully",
+        await Fluttertoast.showToast(
+          msg: "Product has been uploaded",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
-          // backgroundColor: ,
-          // textColor: ,
-          // fontSize: 16.0
         );
       } on FirebaseException catch (error) {
         GlobalMethods.errorDialog(
@@ -209,14 +206,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
       ),
     );
     return Scaffold(
-      key: context.read<MenuControllerA>().getEditProductscaffoldKey,
+      // key: context.read<MenuControllerA>().getEditProductscaffoldKey,
       drawer: const SideMenu(),
       body: Row(
         children: [
-          if (Responsive.isDesktop(context))
-            const Expanded(
-              child: SideMenu(),
-            ),
+          // if (Responsive.isDesktop(context))
+          //   const Expanded(
+          //     child: SideMenu(),
+          //   ),
           Expanded(
             flex: 5,
             child: LoadingManager(
@@ -224,15 +221,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Header(
-                      showTextField: false,
-                      fct: () {
-                        context
-                            .read<MenuControllerA>()
-                            .controlEditProductsMenu();
-                      },
-                      title: 'Edit this product',
-                    ),
+                    // Header(
+                    //   showTextField: false,
+                    //   fct: () {
+                    //     context
+                    //         .read<MenuControllerA>()
+                    //         .controlEditProductsMenu();
+                    //   },
+                    //   title: 'Edit this product',
+                    // ),
                     Container(
                       width: size.width > 650 ? 650 : size.width,
                       color: Theme.of(context).cardColor,
@@ -487,7 +484,19 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                           title: 'Delete?',
                                           subtitle: 'Press okay to confirm',
                                           fct: () async {
-                                            Navigator.pop(context);
+                                            await FirebaseFirestore.instance
+                                                .collection('products')
+                                                .doc(widget.id)
+                                                .delete();
+                                            await Fluttertoast.showToast(
+                                              msg: "Product has been deleted",
+                                              toastLength: Toast.LENGTH_LONG,
+                                              gravity: ToastGravity.CENTER,
+                                              timeInSecForIosWeb: 1,
+                                            );
+                                            while (Navigator.canPop(context)) {
+                                              Navigator.pop(context);
+                                            }
                                           },
                                           context: context);
                                     },
@@ -499,6 +508,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                     onPressed: () {
                                       _updateProduct();
                                       // _uploadForm();
+                                      if (Navigator.canPop(context)) {
+                                        Navigator.pop(context);
+                                      }
                                     },
                                     text: 'Update',
                                     icon: IconlyBold.setting,

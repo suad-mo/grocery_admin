@@ -80,8 +80,7 @@ class _ProductWidgetState extends State<ProductWidget> {
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           onTap: () {
-            Navigator.pushReplacement(
-              context,
+            Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => EditProductScreen(
                   id: widget.id,
@@ -175,7 +174,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                 TextWidget(
                   text: title,
                   color: color,
-                  textSize: 24,
+                  textSize: 20,
                   isTitle: true,
                 ),
               ],
