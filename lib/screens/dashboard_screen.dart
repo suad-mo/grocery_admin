@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_admin/inner_screens/add_prod.dart';
 import 'package:grocery_admin/responsive.dart';
-import 'package:grocery_admin/services/global_method.dart';
+// import 'package:grocery_admin/services/global_method.dart';
 import 'package:grocery_admin/widgets/buttons.dart';
 import 'package:grocery_admin/widgets/grid_products.dart';
 import 'package:grocery_admin/widgets/orders_list.dart';

@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -10,16 +9,16 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconly/iconly.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 import '/screens/loading_manager.dart';
-import '/controllers/MenuController.dart';
+// import '/controllers/MenuController.dart';
 import '/services/global_method.dart';
 import '/services/utils.dart';
 import '/widgets/buttons.dart';
-import '/widgets/header.dart';
+// import '/widgets/header.dart';
 import '/widgets/side_menu.dart';
 import '/widgets/text_widget.dart';
-import '../responsive.dart';
+// import '../responsive.dart';
 
 class EditProductScreen extends StatefulWidget {
   const EditProductScreen(
@@ -38,6 +37,7 @@ class EditProductScreen extends StatefulWidget {
   final bool isPiece, isOnSale;
   final double salePrice;
   @override
+  // ignore: library_private_types_in_public_api
   _EditProductScreenState createState() => _EditProductScreenState();
 }
 
@@ -180,9 +180,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
           _isLoading = false;
         });
       } finally {
-        setState(() {
-          _isLoading = false;
-        });
+        // setState(() {
+        //   _isLoading = false;
+        // });
       }
     }
   }
@@ -191,6 +191,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   Widget build(BuildContext context) {
     final theme = Utils(context).getTheme;
     final color = theme == true ? Colors.white : Colors.black;
+    // ignore: no_leading_underscores_for_local_identifiers
     final _scaffoldColor = Theme.of(context).scaffoldBackgroundColor;
     Size size = Utils(context).getScreenSize;
 
@@ -494,7 +495,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                               gravity: ToastGravity.CENTER,
                                               timeInSecForIosWeb: 1,
                                             );
+                                            // ignore: use_build_context_synchronously
                                             while (Navigator.canPop(context)) {
+                                              // ignore: use_build_context_synchronously
                                               Navigator.pop(context);
                                             }
                                           },
@@ -624,6 +627,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   Future<void> _pickImage() async {
     // MOBILE
     if (!kIsWeb) {
+      // ignore: no_leading_underscores_for_local_identifiers
       final ImagePicker _picker = ImagePicker();
       XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 

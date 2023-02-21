@@ -42,7 +42,7 @@ class _ProductWidgetState extends State<ProductWidget> {
           .collection('products')
           .doc(widget.id)
           .get();
-      if (productsDoc == null) {
+      if (!productsDoc.exists) {
         return;
       } else {
         setState(() {

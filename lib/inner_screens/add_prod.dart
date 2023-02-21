@@ -29,6 +29,7 @@ class UploadProductForm extends StatefulWidget {
   const UploadProductForm({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _UploadProductFormState createState() => _UploadProductFormState();
 }
 
@@ -71,6 +72,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
         );
         return;
       }
+      // ignore: no_leading_underscores_for_local_identifiers
       final _uuid = const Uuid().v4();
       try {
         setState(() {
@@ -184,8 +186,9 @@ class _UploadProductFormState extends State<UploadProductForm> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Utils(context).getTheme;
+    // final theme = Utils(context).getTheme;
     final color = Utils(context).color;
+    // ignore: no_leading_underscores_for_local_identifiers
     final _scaffoldColor = Theme.of(context).scaffoldBackgroundColor;
     Size size = Utils(context).getScreenSize;
 
@@ -467,6 +470,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
 
   Future<void> _pickImage() async {
     if (!kIsWeb) {
+      // ignore: no_leading_underscores_for_local_identifiers
       final ImagePicker _picker = ImagePicker();
       XFile? image = await _picker.pickImage(source: ImageSource.gallery);
       if (image != null) {
@@ -475,9 +479,12 @@ class _UploadProductFormState extends State<UploadProductForm> {
           _pickedImage = selected;
         });
       } else {
-        print('No imahe has been picked');
+        if (kDebugMode) {
+          print('No imahe has been picked');
+        }
       }
     } else if (kIsWeb) {
+      // ignore: no_leading_underscores_for_local_identifiers
       final ImagePicker _picker = ImagePicker();
       XFile? image = await _picker.pickImage(source: ImageSource.gallery);
       if (image != null) {
@@ -487,10 +494,14 @@ class _UploadProductFormState extends State<UploadProductForm> {
           _pickedImage = File('a');
         });
       } else {
-        print('No imahe has been picked');
+        if (kDebugMode) {
+          print('No imahe has been picked');
+        }
       }
     } else {
-      print('Somthing went wrong');
+      if (kDebugMode) {
+        print('Somthing went wrong');
+      }
     }
   }
 
@@ -551,7 +562,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
             setState(() {
               _catValue = value!;
             });
-            print(_catValue);
+            // print(_catValue);
           },
           hint: const Text('Select a category'),
           items: const [

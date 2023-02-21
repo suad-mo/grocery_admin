@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import '/services/utils.dart';
 
 import '../consts/constants.dart';
 import 'products_widget.dart';
-import 'text_widget.dart';
+// import 'text_widget.dart';
 
 class ProductGridWidget extends StatelessWidget {
   const ProductGridWidget(
